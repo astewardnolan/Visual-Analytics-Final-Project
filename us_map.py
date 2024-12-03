@@ -144,12 +144,14 @@ if submit_button:
         #WRITE CODE FOR GRAPHS HERE!!!
         
         
-
+        #
         # Display multiple graphs for each selected characteristic
         st.subheader("Graphs for Selected Characteristics")
         for characteristic in selected_characteristics:
             st.write(f"Graph for {characteristic}:")
             
+
+            #Income graphs
             if characteristic == "Income":
                 # Reading in the data
                 df = pd.read_csv('mergedIncome.csv')
