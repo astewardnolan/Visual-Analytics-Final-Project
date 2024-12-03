@@ -219,7 +219,7 @@ if submit_button:
             if characteristic == "Walkability":
                 st.title("Walkability Legend")
                 img = Image.open("walk_graphs/legend.png")  # Replace with your PNG file path
-                st.image(img, caption="NationalWalkabilityIndex", use_column_width=True)
+                st.image(img, caption="NationalWalkabilityIndex", use_container_width=True)
 
                 for city in selected_cities:
                     if city == "Boston":
