@@ -2,13 +2,14 @@ import streamlit as st
 import folium
 from streamlit_folium import st_folium
 import matplotlib.pyplot as plt
+
 import seaborn as sns
 from io import BytesIO
 import base64
 from PIL import Image
 import pandas as pd
 # import import_ipynb
-import MergedIncome # importing MergedIncome.ipynb
+from MergedIncome import plot_selected_cities # importing MergedIncome.py
 
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
@@ -152,10 +153,13 @@ if submit_button:
             if characteristic == "Income":
                 # Reading in the data
                 df = pd.read_csv('mergedIncome.csv')
-                
+                #cities= selected_cities.replace(" ","")
                 # Generating the plot for the selected cities
-                MergedIncome.plot_selected_cities(df, selected_cities)
+                graph = plot_selected_cities(df, selected_cities)
+                st.pyplot(graph)
 
+            
+            
             #Generate HOUSING graphs!
             if characteristic == "Housing":
                 for city in selected_cities:
@@ -287,6 +291,7 @@ if submit_button:
                         ),
                         unsafe_allow_html=True,
                         )
+            
                             
 
 

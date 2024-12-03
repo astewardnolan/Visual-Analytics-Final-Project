@@ -18,14 +18,14 @@ df = pd.read_csv('mergedIncome.csv')
 # In[7]:
 
 
-def plot_selected_cities(data, cities):
+def plot_selected_cities(data, cities) ->plt:
     """
     Plots a line graph for the given cities.
     
     Args:
         data (DataFrame): Merged DataFrame with 'DATE' and city columns.
         cities (list): List of city names to plot.
-    """
+    """    
     # Filter DataFrame to include only the 'DATE' and selected cities
     filtered_df = data[['DATE'] + cities]
     
@@ -43,6 +43,7 @@ def plot_selected_cities(data, cities):
     plt.grid(True)
     plt.tight_layout()
     plt.show()
+    return plt
 
 # List of cities to plot
 selected_cities = ["Seattle", "LA", "NYC", "Chicago", "Boston", "Houston", "Miami"]
@@ -50,7 +51,7 @@ selected_cities = ["Seattle", "LA", "NYC", "Chicago", "Boston", "Houston", "Miam
 
 
 # Call the function
-plot_selected_cities(df, selected_cities)
+#plot_selected_cities(df, selected_cities)
 
 
 # In[ ]:
