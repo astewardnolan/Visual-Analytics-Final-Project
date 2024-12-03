@@ -19,7 +19,7 @@ st.title("Interactive Map of Major U.S. Cities")
 map_center = [37.0902, -95.7129]  # Centered around the United States
 us_map = folium.Map(location=map_center, zoom_start=4)
 
-# Add markers for major cities
+# Add markers for major cities on the map
 for city, (lat, lon) in cities.items():
     folium.Marker(
         location=[lat, lon],
@@ -31,9 +31,10 @@ for city, (lat, lon) in cities.items():
 st_folium(us_map, width=700, height=500)
 
 # Below the map: Select Characteristics for Data
+st.subheader("Select Characteristics")
 
 # Checkbox for selecting "Select All"
-select_all = st.checkbox("Select All", key="select_all")
+select_all = st.checkbox("Select All Characteristics", key="select_all")
 
 # If "Select All" is checked, automatically check all individual checkboxes
 if select_all:
@@ -54,6 +55,15 @@ else:
     housing = st.checkbox("Housing")
     crime_rate = st.checkbox("Crime Rate")
     walkability = st.checkbox("Walkability")
+
+# Below the characteristics, allow users to select cities
+
+# Display checkboxes for selecting cities
+st.subheader("Select Cities")
+selected_cities = []
+for city in cities.keys():
+    if st.checkbox(city, key=city):  # Add checkbox for each city
+        selected_cities.append(city)
 
 # Submit button to process the data
 submit_button = st.button("Submit")
@@ -79,11 +89,20 @@ if submit_button:
     if walkability:
         selected_characteristics.append("Walkability")
     
-    # Display the selected characteristics
-    if selected_characteristics:
+
+
+
+
+
+#Write functions here!!!
+
+
+    # Display the selected characteristics and cities
+    if selected_characteristics and selected_cities:
         st.write(f"Selected Characteristics: {', '.join(selected_characteristics)}")
+        st.write(f"Selected Cities: {', '.join(selected_cities)}")
         
         # Placeholder for API call or further processing logic
-        st.write("You can now fetch data for these characteristics (e.g., from an API).")
+        st.write("You can now fetch data for these selections (e.g., from an API).")
     else:
-        st.write("Please select at least one characteristic.")
+        st.write("Please select at least one characteristic and one city.")
