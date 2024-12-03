@@ -1,6 +1,10 @@
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
+import matplotlib.pyplot as plt
+import seaborn as sns
+from io import BytesIO
+import base64
 
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
@@ -9,7 +13,20 @@ cities = {
     "Los Angeles": (34.0522, -118.2437),
     "New York City": (40.7128, -74.0060),
     "Miami": (25.7617, -80.1918),
-    "Houston": (29.7604, -95.3698)
+    "Houston": (29.7604, -95.3698),
+    "Boston": (42.3601, -71.0589)  # Added Boston here
+}
+
+# Mock data for characteristics like Race, Age, etc.
+characteristic_data = {
+    "Race": {"Seattle": 30, "Chicago": 40, "Los Angeles": 50, "New York City": 60, "Miami": 70, "Houston": 80, "Boston": 55},
+    "Age": {"Seattle": 35, "Chicago": 40, "Los Angeles": 38, "New York City": 42, "Miami": 36, "Houston": 41, "Boston": 34},
+    "Income": {"Seattle": 80000, "Chicago": 75000, "Los Angeles": 72000, "New York City": 90000, "Miami": 60000, "Houston": 65000, "Boston": 85000},
+    "Cost of Milk": {"Seattle": 3.5, "Chicago": 3.2, "Los Angeles": 3.0, "New York City": 3.8, "Miami": 3.6, "Houston": 2.9, "Boston": 3.4},
+    "Political Party": {"Seattle": 60, "Chicago": 45, "Los Angeles": 55, "New York City": 70, "Miami": 50, "Houston": 40, "Boston": 65},
+    "Housing": {"Seattle": 2000, "Chicago": 1800, "Los Angeles": 2500, "New York City": 3500, "Miami": 1500, "Houston": 1300, "Boston": 2800},
+    "Crime Rate": {"Seattle": 2, "Chicago": 4, "Los Angeles": 3, "New York City": 1, "Miami": 3, "Houston": 2, "Boston": 2},
+    "Walkability": {"Seattle": 78, "Chicago": 70, "Los Angeles": 65, "New York City": 88, "Miami": 60, "Houston": 55, "Boston": 82},
 }
 
 # Streamlit title
@@ -60,15 +77,49 @@ else:
 
 # Display checkboxes for selecting cities
 st.subheader("Select Cities")
+
+# Select All Cities Checkbox
+select_all_cities = st.checkbox("Select All Cities", key="select_all_cities")
+
+# If "Select All Cities" is checked, automatically check all individual checkboxes
 selected_cities = []
-for city in cities.keys():
-    if st.checkbox(city, key=city):  # Add checkbox for each city
-        selected_cities.append(city)
+if select_all_cities:
+    selected_cities = list(cities.keys())  # Select all cities
+else:
+    for city in cities.keys():
+        if st.checkbox(city, key=city):  # Add checkbox for each city
+            selected_cities.append(city)
 
 # Submit button to process the data
 submit_button = st.button("Submit")
 
-# If the submit button is clicked
+# Function to generate a graph based on selected characteristics and cities
+def generate_graph(selected_characteristics, selected_cities):
+    # Example graph generation for selected characteristic
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Mocking a bar plot for each selected characteristic and city
+    for characteristic in selected_characteristics:
+        data = {city: characteristic_data[characteristic].get(city, 0) for city in selected_cities}
+        sns.barplot(x=list(data.keys()), y=list(data.values()), ax=ax, label=characteristic)
+
+    ax.set_title(f"Graph for: {', '.join(selected_characteristics)}")
+    ax.set_xlabel("City")
+    ax.set_ylabel("Value")
+    ax.legend()
+
+    # Save the figure to a BytesIO object
+    img_buf = BytesIO()
+    plt.savefig(img_buf, format='png')
+    img_buf.seek(0)
+
+    # Convert to base64 to display in Streamlit
+    img_base64 = base64.b64encode(img_buf.read()).decode()
+    plt.close()  # Close the plot to avoid display of unwanted figures
+
+    return img_base64
+
+# Handle Submit and Graph Display
 if submit_button:
     # Collect selected characteristics
     selected_characteristics = []
@@ -88,21 +139,24 @@ if submit_button:
         selected_characteristics.append("Crime Rate")
     if walkability:
         selected_characteristics.append("Walkability")
-    
-
-
-
-
-
-#Write functions here!!!
-
 
     # Display the selected characteristics and cities
     if selected_characteristics and selected_cities:
         st.write(f"Selected Characteristics: {', '.join(selected_characteristics)}")
         st.write(f"Selected Cities: {', '.join(selected_cities)}")
-        
-        # Placeholder for API call or further processing logic
-        st.write("You can now fetch data for these selections (e.g., from an API).")
+
+        # Display multiple graphs for each selected characteristic
+        st.subheader("Graphs for Selected Characteristics")
+        for characteristic in selected_characteristics:
+            st.write(f"Graph for {characteristic}:")
+            graph_img_base64 = generate_graph([characteristic], selected_cities)
+            st.image(f"data:image/png;base64,{graph_img_base64}", use_column_width=True)
+
+        # Add Reset Button (X) to clear the graph and selections
+        reset_button = st.button("Reset All")
+        if reset_button:
+            # Reset the checkboxes and graphs
+            st.session_state.clear()  # Clears all session state variables (i.e., resets everything)
+            st.write("Selections and graphs have been reset.")
     else:
         st.write("Please select at least one characteristic and one city.")
