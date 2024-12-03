@@ -6,7 +6,9 @@ import seaborn as sns
 from io import BytesIO
 import base64
 from PIL import Image
-
+import pandas as pd
+# import import_ipynb
+import MergedIncome # importing MergedIncome.ipynb
 
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
@@ -139,11 +141,20 @@ if submit_button:
 
 
         #WRITE CODE FOR GRAPHS HERE!!!
+        
+        
 
         # Display multiple graphs for each selected characteristic
         st.subheader("Graphs for Selected Characteristics")
         for characteristic in selected_characteristics:
             st.write(f"Graph for {characteristic}:")
+            
+            if characteristic == "Income":
+                # Reading in the data
+                df = pd.read_csv('mergedIncome.csv')
+                
+                # Generating the plot for the selected cities
+                MergedIncome.plot_selected_cities(df, selected_cities)
 
             #Generate graphs here !!!
             if characteristic == "Housing":
