@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from io import BytesIO
 import base64
+from PIL import Image
+
 
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
@@ -17,17 +19,6 @@ cities = {
     "Boston": (42.3601, -71.0589)  # Added Boston here
 }
 
-# Mock data for characteristics like Race, Age, etc.
-characteristic_data = {
-    "Race": {"Seattle": 30, "Chicago": 40, "Los Angeles": 50, "New York City": 60, "Miami": 70, "Houston": 80, "Boston": 55},
-    "Age": {"Seattle": 35, "Chicago": 40, "Los Angeles": 38, "New York City": 42, "Miami": 36, "Houston": 41, "Boston": 34},
-    "Income": {"Seattle": 80000, "Chicago": 75000, "Los Angeles": 72000, "New York City": 90000, "Miami": 60000, "Houston": 65000, "Boston": 85000},
-    "Cost of Milk": {"Seattle": 3.5, "Chicago": 3.2, "Los Angeles": 3.0, "New York City": 3.8, "Miami": 3.6, "Houston": 2.9, "Boston": 3.4},
-    "Political Party": {"Seattle": 60, "Chicago": 45, "Los Angeles": 55, "New York City": 70, "Miami": 50, "Houston": 40, "Boston": 65},
-    "Housing": {"Seattle": 2000, "Chicago": 1800, "Los Angeles": 2500, "New York City": 3500, "Miami": 1500, "Houston": 1300, "Boston": 2800},
-    "Crime Rate": {"Seattle": 2, "Chicago": 4, "Los Angeles": 3, "New York City": 1, "Miami": 3, "Houston": 2, "Boston": 2},
-    "Walkability": {"Seattle": 78, "Chicago": 70, "Los Angeles": 65, "New York City": 88, "Miami": 60, "Houston": 55, "Boston": 82},
-}
 
 # Streamlit title
 st.title("Interactive Map of Major U.S. Cities")
@@ -145,12 +136,74 @@ if submit_button:
         st.write(f"Selected Characteristics: {', '.join(selected_characteristics)}")
         st.write(f"Selected Cities: {', '.join(selected_cities)}")
 
+
+
+        #WRITE CODE FOR GRAPHS HERE!!!
+
         # Display multiple graphs for each selected characteristic
         st.subheader("Graphs for Selected Characteristics")
         for characteristic in selected_characteristics:
             st.write(f"Graph for {characteristic}:")
-            graph_img_base64 = generate_graph([characteristic], selected_cities)
-            st.image(f"data:image/png;base64,{graph_img_base64}", use_column_width=True)
+
+            #Generate graphs here !!!
+            if characteristic == "Housing":
+                for city in selected_cities:
+                    if city == "Boston":
+                        # Streamlit title
+                        st.title("Single Family Home Cost Boston")
+                        # Load an image from file (ensure the file is in the same directory or provide the full path)
+                        img = Image.open("housing_graphs/Boston.png")  # Replace with your PNG file path
+                        # Display the image in Streamlit
+                        st.image(img, caption="This is your PNG Image", use_column_width=True)
+                    if city == "Chicago":
+                        # Streamlit title
+                        st.title("Single Family Home Cost Chicago")
+                        # Load an image from file (ensure the file is in the same directory or provide the full path)
+                        img = Image.open("housing_graphs/Chicago.png")  # Replace with your PNG file path
+                        # Display the image in Streamlit
+                        st.image(img, caption="This is your PNG Image", use_column_width=True)
+                    if city == "Houston":
+                        # Streamlit title
+                        st.title("Single Family Home Cost Houston")
+                        # Load an image from file (ensure the file is in the same directory or provide the full path)
+                        img = Image.open("housing_graphs/Houston.png")  # Replace with your PNG file path
+                        # Display the image in Streamlit
+                        st.image(img, caption="This is your PNG Image", use_column_width=True)
+                    if city == "Los Angeles":
+                        # Streamlit title
+                        st.title("Single Family Home Cost L.A")
+                        # Load an image from file (ensure the file is in the same directory or provide the full path)
+                        img = Image.open("housing_graphs/LA.png")  # Replace with your PNG file path
+                        # Display the image in Streamlit
+                        st.image(img, caption="This is your PNG Image", use_column_width=True)
+                    if city == "Miami":
+                        # Streamlit title
+                        st.title("Single Family Home Cost Miami")
+                        # Load an image from file (ensure the file is in the same directory or provide the full path)
+                        img = Image.open("housing_graphs/Miami.png")  # Replace with your PNG file path
+                        # Display the image in Streamlit
+                        st.image(img, caption="This is your PNG Image", use_column_width=True)
+                    if city == "New York City":
+                        # Streamlit title
+                        st.title("Single Family Home Cost N.Y.C")
+                        # Load an image from file (ensure the file is in the same directory or provide the full path)
+                        img = Image.open("housing_graphs/NYC.png")  # Replace with your PNG file path
+                        # Display the image in Streamlit
+                        st.image(img, caption="This is your PNG Image", use_column_width=True)
+                    if city == "Seattle":
+                        # Streamlit title
+                        st.title("Single Family Home Cost Seattle")
+                        # Load an image from file (ensure the file is in the same directory or provide the full path)
+                        img = Image.open("housing_graphs/Seattle.png")  # Replace with your PNG file path
+                        # Display the image in Streamlit
+                        st.image(img, caption="This is your PNG Image", use_column_width=True)
+
+
+
+
+
+           # graph_img_base64 = generate_graph([characteristic], selected_cities)
+            #st.image(f"data:image/png;base64,{graph_img_base64}", use_column_width=True)
 
         # Add Reset Button (X) to clear the graph and selections
         reset_button = st.button("Reset All")
