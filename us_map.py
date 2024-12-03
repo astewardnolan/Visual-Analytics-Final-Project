@@ -145,7 +145,7 @@ if submit_button:
         for characteristic in selected_characteristics:
             st.write(f"Graph for {characteristic}:")
 
-            #Generate graphs here !!!
+            #Generate HOUSING graphs!
             if characteristic == "Housing":
                 for city in selected_cities:
                     if city == "Boston":
@@ -197,13 +197,88 @@ if submit_button:
                         img = Image.open("housing_graphs/Seattle.png")  # Replace with your PNG file path
                         # Display the image in Streamlit
                         st.image(img, caption="This is your PNG Image", use_column_width=True)
+            
+            #WALKABILITY graphs!!!
+            if characteristic == "Walkability":
+                st.title("Walkability Legend")
+                img = Image.open("walk_graphs/legend.png")  # Replace with your PNG file path
+                st.image(img, caption="NationalWalkabilityIndex", use_column_width=True)
+
+                for city in selected_cities:
+                    if city == "Boston":
+                        st.title("Walkability of Boston")
+                        st.markdown(
+                        """<a href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd">
+                        <img src="data:image/png;base64,{}" width="800">
+                        </a>""".format(
+                            base64.b64encode(open("walk_graphs/boston.png", "rb").read()).decode()
+                        ),
+                        unsafe_allow_html=True,
+                        )
+           
+                    if city == "Chicago":
+                        st.title("Walkability of Chicago")
+                        st.markdown(
+                        """<a href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd">
+                        <img src="data:image/png;base64,{}" width="800">
+                        </a>""".format(
+                            base64.b64encode(open("walk_graphs/chicago.png", "rb").read()).decode()
+                        ),
+                        unsafe_allow_html=True,
+                        )
+                    if city == "Houston":
+                        st.title("Walkability of Houston")
+                        st.markdown(
+                        """<a href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd">
+                        <img src="data:image/png;base64,{}" width="800">
+                        </a>""".format(
+                            base64.b64encode(open("walk_graphs/houston.png", "rb").read()).decode()
+                        ),
+                        unsafe_allow_html=True,
+                        )
+                    if city == "Los Angeles":
+                        st.title("Walkability of Los Angeles")
+                        st.markdown(
+                        """<a href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd">
+                        <img src="data:image/png;base64,{}" width="800">
+                        </a>""".format(
+                            base64.b64encode(open("walk_graphs/la.png", "rb").read()).decode()
+                        ),
+                        unsafe_allow_html=True,
+                        )
+                    if city == "Miami":
+                        st.title("Walkability of Miami")
+                        st.markdown(
+                        """<a href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd">
+                        <img src="data:image/png;base64,{}" width="800">
+                        </a>""".format(
+                            base64.b64encode(open("walk_graphs/miami.png", "rb").read()).decode()
+                        ),
+                        unsafe_allow_html=True,
+                        )
+                    if city == "New York City":
+                        st.title("Walkability of N.Y.C")
+                        st.markdown(
+                        """<a href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd">
+                        <img src="data:image/png;base64,{}" width="800">
+                        </a>""".format(
+                            base64.b64encode(open("walk_graphs/nyc.png", "rb").read()).decode()
+                        ),
+                        unsafe_allow_html=True,
+                        )
+                    if city == "Seattle":
+                        st.title("Walkability of Seattle")
+                        st.markdown(
+                        """<a href="https://www.arcgis.com/home/webmap/viewer.html?url=https%3A%2F%2Fgeodata.epa.gov%2Farcgis%2Frest%2Fservices%2FOA%2FWalkabilityIndex%2FMapServer&source=sd">
+                        <img src="data:image/png;base64,{}" width="800">
+                        </a>""".format(
+                            base64.b64encode(open("walk_graphs/seattle.png", "rb").read()).decode()
+                        ),
+                        unsafe_allow_html=True,
+                        )
+                            
 
 
-
-
-
-           # graph_img_base64 = generate_graph([characteristic], selected_cities)
-            #st.image(f"data:image/png;base64,{graph_img_base64}", use_column_width=True)
 
         # Add Reset Button (X) to clear the graph and selections
         reset_button = st.button("Reset All")
