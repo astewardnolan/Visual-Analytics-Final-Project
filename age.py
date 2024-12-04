@@ -1,61 +1,79 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def plot_age_demographics(cities):
-    # Load the CSV data
-    df = pd.read_csv('age.csv', header=0)  # Ensure the first row is used as column names
+# Read the CSV data
+df = pd.read_csv('age_clean.csv')
 
-    # Strip spaces from column names
-    df.columns = df.columns.str.strip()
+# Function to plot population distribution by age group for each city
+def plot_age_group_distribution(data, cities) -> plt:
+    """
+    Generates bar charts for the population distribution by age group for each city.
 
-    # Define the demographic rows we are interested in (age group percentages)
-    demographic_rows = [
-        'Persons under 5 years, percent',
-        'Persons under 18 years, percent',
-        'Persons 65 years and over, percent'
-    ]
+    Args:
+        data (DataFrame): DataFrame with population data by age group.
+        cities (list): List of city names to plot.
+    """
+    # Rename the age group columns to be more readable
+    age_group_names = {
+        'UNDER5_TOT': 'Under 5 Years',
+        'AGE513_TOT': 'Ages 5-13 Years',
+        'AGE1417_TOT': 'Ages 14-17 Years',
+        'AGE1824_TOT': 'Ages 18-24 Years',
+        'AGE2544_TOT': 'Ages 25-44 Years',
+        'AGE4564_TOT': 'Ages 45-64 Years',
+        'AGE65PLUS_TOT': '65+ Years'
+    }
+    city_colors = {
+        "Seattle": "#40c9cd",
+        "Los Angeles": "#e5c343",
+        "New York City": "#b8b9b8",
+        "Chicago": "#66aff0",
+        "Boston": "#c62205",
+        "Houston": "darkblue",
+        "Miami": "#ff73ce"
+    }
+    # Create a new figure for each city
+    plots = []  # List to store plot objects
+    
+    for city in cities:
+        # Filter the data for the current city and for the year 2023
+        city_data = data[(data['NAME'].str.contains(city, case=False))]
+        
+        # If no data for the city or year 2023, skip
+        if city_data.empty:
+            continue
+        
+        # Extract the data for the specified city (we assume there will be only one row after filtering by city and year)
+        city_data_row = city_data.iloc[0]
+        
+        # Extract the values for each age group
+        age_values = [city_data_row[age_group] for age_group in age_group_names.keys()]
+        
+        # Create a bar plot for the age distribution
+        fig, ax = plt.subplots(figsize=(10, 6))
+        ax.bar(age_group_names.values(), age_values, color=city_colors.get(city, 'gray'))
+        
+        # Set plot labels and title
+        ax.set_title(f'Population by Age Group for {city} (Year 2023)')
+        ax.set_xlabel('Age Group')
+        ax.set_ylabel('Population')
+        ax.grid(axis='y', linestyle='--', linewidth=0.7)
+        plt.tight_layout()
 
-    # Filter the DataFrame to include only the relevant demographic rows
-    df_demographics = df[df['Fact'].isin(demographic_rows)]
+        # Append the figure to the list of plots
+        plots.append(fig)
+    
+    return plots
 
-    # Drop the 'Fact' column for easier manipulation
-    df_demographics = df_demographics.drop(columns=['Fact'])
+# List of cities to plot (from the 'NAME' column)
+cities = ["Seattle", "Los Angeles", "New York City", "Chicago", "Boston", "Houston", "Miami"]
 
-    # Transpose the DataFrame to have cities as columns and demographic categories as rows
-    df_demographics = df_demographics.T
+# Call the function to generate plots
+plots = plot_age_group_distribution(df, cities)
 
-    # Clean the data: Remove '%', commas, and convert to numeric
-    for col in df_demographics.columns:
-        df_demographics[col] = df_demographics[col].replace({'%': '', ',': ''}, regex=True).astype(float)
-
-    # Set the demographic categories as index
-    df_demographics.index = [
-        'Persons under 5 years',
-        'Persons under 18 years',
-        'Persons 65 years and over'
-    ]
-
-    # Loop through each demographic category and plot
-    for index in df_demographics.index:
-        plt.figure(figsize=(10, 6))
-        plt.bar(df_demographics.columns, df_demographics.loc[index], color='skyblue')
-        plt.title(f'Age Demographics: {index}')
-        plt.ylabel('Percentage')
-        plt.xticks(rotation=45)
-        plt.ylim(0, 30)  # Adjust y-axis limit as needed
-        plt.tight_layout()  # Adjust layout to prevent overlap
-        plt.show()  # Show the plot
-
-# Example usage
-cities = [
-    "Houston city, Texas", 
-    "Los Angeles city, California", 
-    "New York city, New York", 
-    "Seattle city, Washington", 
-    "Miami city, Florida", 
-    "Chicago city, Illinois", 
-    "Boston city, Massachusetts"
-]
-
-# Call the function to plot the age demographics for the specified cities
-plot_age_demographics(cities)
+# Display all plots
+for plot in plots:
+    plt.show()

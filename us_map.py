@@ -11,12 +11,10 @@ import pandas as pd
 # import import_ipynb
 from MergedIncome import plot_selected_cities # importing MergedIncome.py
 from pie import plot_pie_charts
-<<<<<<< HEAD
 from milkT import milk_graph
-=======
 from CrimeRates import plot_crime_rates
+from age import plot_age_group_distribution
 
->>>>>>> b0cf98bc3d62402c890743c443884ced961e3837
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
     "Seattle": (47.6062, -122.3321),
@@ -181,7 +179,6 @@ if submit_button:
                 # Generating the plot for the selected cities\
                 if "Los Angeles" in selected_cities:
                     st.write("Data for Los Angeles is not available")
-
                 graph = milk_graph(selected_cities)
                 st.pyplot(graph)
 
@@ -192,7 +189,6 @@ if submit_button:
                 #cities= selected_cities.replace(" ","")
                 # Generating the plot for the selected cities
                 graphs = plot_crime_rates(df, selected_cities)
-                
                 for graph in graphs:
                     st.pyplot(graph)
                     
@@ -203,6 +199,11 @@ if submit_button:
                 # # Display each unique graph
                 # for graph in unique_graphs:
                 #     st.pyplot(graph)
+            if characteristic == "Age":
+                df = pd.read_csv('age_clean.csv')
+                graphs = plot_age_group_distribution(df, selected_cities)
+                for graph in graphs:
+                    st.pyplot(graph)
             
             #Generate HOUSING graphs!
             if characteristic == "Housing":
