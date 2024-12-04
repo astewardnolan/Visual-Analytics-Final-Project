@@ -178,8 +178,17 @@ if submit_button:
                 #cities= selected_cities.replace(" ","")
                 # Generating the plot for the selected cities
                 graphs = plot_crime_rates(df, selected_cities)
+                
                 for graph in graphs:
                     st.pyplot(graph)
+                    
+                # print(f"Graphs before removing duplicates: {len(graphs)}")
+                # unique_graphs = list(set(graphs))  # Remove duplicate figures if any
+                # print(f"Graphs after removing duplicates: {len(unique_graphs)}")
+    
+                # # Display each unique graph
+                # for graph in unique_graphs:
+                #     st.pyplot(graph)
             
             #Generate HOUSING graphs!
             if characteristic == "Housing":

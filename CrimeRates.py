@@ -46,18 +46,36 @@ def plot_crime_rates(data, cities) -> plt:
         city_data = data[data['series'] == city]
         
         # Plot the histogram using the city's specific color
-        plt.figure(figsize=(10, 6))
-        plt.bar(months, city_data.iloc[0, 1:].values, color=city_colors.get(city, 'gray'))
-        plt.title(f'Violent Crime Reports for {city} (2023)')
-        plt.xlabel('Month')
-        plt.ylabel('Number of Crimes per Month')
-        plt.xticks(rotation=45)
-        plt.grid(axis='y', linestyle='--', linewidth=0.7)
+        # plt.figure(figsize=(10, 6))
+        # plt.bar(months, city_data.iloc[0, 1:].values, color=city_colors.get(city, 'gray'))
+        # plt.title(f'Violent Crime Reports for {city} (2023)')
+        # plt.xlabel('Month')
+        # plt.ylabel('Number of Crimes per Month')
+        # plt.xticks(rotation=45)
+        # plt.grid(axis='y', linestyle='--', linewidth=0.7)
+        # plt.tight_layout()      
+        # plt.show()
+        # plots.append(plt)
+        # plt.close()  
+    
+        # code above wouldn't work with streamlit, instead using code below
+        # Create a new figure for each city
+        fig, ax = plt.subplots(figsize=(10, 6))
+        ax.bar(months, city_data.iloc[0, 1:].values, color=city_colors.get(city, 'gray'))
+        ax.set_title(f'Violent Crime Reports for {city} (2023)')
+        ax.set_xlabel('Month')
+        ax.set_ylabel('Number of Crimes per Month')
+        ax.set_xticklabels(months, rotation=45)
+        ax.grid(axis='y', linestyle='--', linewidth=0.7)
         plt.tight_layout()
-        plt.show()
         
-        plots.append(plt)
-        return plots
+        # Append the figure to the list
+        plots.append(fig)
+    
+    return plots
+
+        
+    return plots
 
 # List of cities to plot
 # cities = ["Seattle Police Department", "Los Angeles Police Department", 
