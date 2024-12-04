@@ -67,6 +67,9 @@ def plot_crime_rates(data, cities) -> plt:
         ax.set_ylabel('Number of Crimes per Month')
         ax.set_xticklabels(months, rotation=45)
         ax.grid(axis='y', linestyle='--', linewidth=0.7)
+
+        ax.set_ylim(0, 21000)
+
         plt.tight_layout()
         
         # Append the figure to the list
