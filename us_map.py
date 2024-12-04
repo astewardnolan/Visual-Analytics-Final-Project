@@ -11,6 +11,7 @@ import pandas as pd
 # import import_ipynb
 from MergedIncome import plot_selected_cities # importing MergedIncome.py
 from pie import plot_pie_charts
+from CrimeRates import plot_crime_rates
 
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
@@ -170,7 +171,15 @@ if submit_button:
                 graph = plot_pie_charts(df, selected_cities)
                 st.pyplot(graph)
 
-            
+            #Crime Rate graphs
+            if characteristic == "Crime Rate":
+                # Reading in the data
+                df = pd.read_csv('mergedCrimeRates.csv')
+                #cities= selected_cities.replace(" ","")
+                # Generating the plot for the selected cities
+                graphs = plot_crime_rates(df, selected_cities)
+                for graph in graphs:
+                    st.pyplot(graph)
             
             #Generate HOUSING graphs!
             if characteristic == "Housing":
