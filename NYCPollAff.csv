@@ -1,4 +1,22 @@
-Party,Votes
-Republican,786294
-Democrat,1748140
-Other,11421
+Party,Votes,City
+Republican,786294, New York City
+Democrat,1748140,New York City
+Other,11421,New York City
+Republican,601758, Seattle
+Democrat,1307874, Seattle
+Other,65261, Seattle
+Republican,2839078, Los Angeles
+Democrat,4133627,Los Angeles
+Other,222816,Los Angeles
+Republican,711520, Boston
+Democrat,1373122,Boston
+Other,48191,Boston
+Republican,1319333, Chicago
+Democrat,2316972, Chicago
+Other,49183, Chicago
+Republican,1385943, Houston
+Democrat,1205982, Houston
+Other,41641, Houston
+Republican,1331378, Miami
+Democrat,1360195,Miami
+Other,22743,Miami

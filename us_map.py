@@ -10,6 +10,7 @@ from PIL import Image
 import pandas as pd
 # import import_ipynb
 from MergedIncome import plot_selected_cities # importing MergedIncome.py
+from pie import plot_pie_charts
 
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
@@ -62,7 +63,7 @@ else:
     age = st.checkbox("Age")
     income = st.checkbox("Income")
     cost_of_milk = st.checkbox("Cost of Milk")
-    political_party = st.checkbox("Political Party")
+    political_party = st.checkbox("2024 Election Voting")
     housing = st.checkbox("Housing")
     crime_rate = st.checkbox("Crime Rate")
     walkability = st.checkbox("Walkability")
@@ -126,7 +127,7 @@ if submit_button:
     if cost_of_milk:
         selected_characteristics.append("Cost of Milk")
     if political_party:
-        selected_characteristics.append("Political Party")
+        selected_characteristics.append("2024 Election Voting")
     if housing:
         selected_characteristics.append("Housing")
     if crime_rate:
@@ -158,6 +159,15 @@ if submit_button:
                 #cities= selected_cities.replace(" ","")
                 # Generating the plot for the selected cities
                 graph = plot_selected_cities(df, selected_cities)
+                st.pyplot(graph)
+
+            #Voting graphs
+            if characteristic == "2024 Election Voting":
+                # Reading in the data
+                df = pd.read_csv('NYCPollAff.csv')
+                #cities= selected_cities.replace(" ","")
+                # Generating the plot for the selected cities\
+                graph = plot_pie_charts(df, selected_cities)
                 st.pyplot(graph)
 
             
