@@ -11,7 +11,7 @@ import pandas as pd
 # import import_ipynb
 from MergedIncome import plot_selected_cities # importing MergedIncome.py
 from pie import plot_pie_charts
-
+from milkT import milk_graph
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
     "Seattle": (47.6062, -122.3321),
@@ -168,6 +168,16 @@ if submit_button:
                 #cities= selected_cities.replace(" ","")
                 # Generating the plot for the selected cities\
                 graph = plot_pie_charts(df, selected_cities)
+                st.pyplot(graph)
+            #Voting graphs
+            if characteristic == "Cost of Milk":
+                # Reading in the data
+                #cities= selected_cities.replace(" ","")
+                # Generating the plot for the selected cities\
+                if "Los Angeles" in selected_cities:
+                    st.write("Data for Los Angeles is not available")
+
+                graph = milk_graph(selected_cities)
                 st.pyplot(graph)
 
             
