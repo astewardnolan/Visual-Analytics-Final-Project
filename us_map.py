@@ -11,7 +11,12 @@ import pandas as pd
 # import import_ipynb
 from MergedIncome import plot_selected_cities # importing MergedIncome.py
 from pie import plot_pie_charts
+<<<<<<< HEAD
 from milkT import milk_graph
+=======
+from CrimeRates import plot_crime_rates
+
+>>>>>>> b0cf98bc3d62402c890743c443884ced961e3837
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
     "Seattle": (47.6062, -122.3321),
@@ -180,7 +185,24 @@ if submit_button:
                 graph = milk_graph(selected_cities)
                 st.pyplot(graph)
 
-            
+            #Crime Rate graphs
+            if characteristic == "Crime Rate":
+                # Reading in the data
+                df = pd.read_csv('mergedCrimeRates.csv')
+                #cities= selected_cities.replace(" ","")
+                # Generating the plot for the selected cities
+                graphs = plot_crime_rates(df, selected_cities)
+                
+                for graph in graphs:
+                    st.pyplot(graph)
+                    
+                # print(f"Graphs before removing duplicates: {len(graphs)}")
+                # unique_graphs = list(set(graphs))  # Remove duplicate figures if any
+                # print(f"Graphs after removing duplicates: {len(unique_graphs)}")
+    
+                # # Display each unique graph
+                # for graph in unique_graphs:
+                #     st.pyplot(graph)
             
             #Generate HOUSING graphs!
             if characteristic == "Housing":
