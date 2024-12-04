@@ -26,6 +26,7 @@ def plot_age_group_distribution(data, cities) -> plt:
         'AGE4564_TOT': 'Ages 45-64 Years',
         'AGE65PLUS_TOT': '65+ Years'
     }
+    
     city_colors = {
         "Seattle": "#40c9cd",
         "Los Angeles": "#e5c343",
@@ -35,32 +36,39 @@ def plot_age_group_distribution(data, cities) -> plt:
         "Houston": "darkblue",
         "Miami": "#ff73ce"
     }
+    
     # Create a new figure for each city
     plots = []  # List to store plot objects
     
     for city in cities:
-        # Filter the data for the current city and for the year 2023
-        city_data = data[(data['NAME'].str.contains(city, case=False))]
+        # Filter the data for the current city
+        city_data = data[data['NAME'].str.contains(city, case=False)]
         
-        # If no data for the city or year 2023, skip
+        # If no data for the city, skip
         if city_data.empty:
             continue
         
-        # Extract the data for the specified city (we assume there will be only one row after filtering by city and year)
+        # Extract the data for the specified city (we assume there will be only one row after filtering by city)
         city_data_row = city_data.iloc[0]
         
-        # Extract the values for each age group
+        # Extract the total population
+        total_population = city_data_row['POPESTIMATE']
+        
+        # Extract the values for each age group and calculate percentages
         age_values = [city_data_row[age_group] for age_group in age_group_names.keys()]
+        age_percentages = [(value / total_population) * 100 for value in age_values]
         
         # Create a bar plot for the age distribution
         fig, ax = plt.subplots(figsize=(10, 6))
-        ax.bar(age_group_names.values(), age_values, color=city_colors.get(city, 'gray'))
+        ax.bar(age_group_names.values(), age_percentages, color=city_colors.get(city, 'gray'))
         
         # Set plot labels and title
         ax.set_title(f'Population by Age Group for {city} (Year 2023)')
         ax.set_xlabel('Age Group')
-        ax.set_ylabel('Population')
+        ax.set_ylabel('Percentage of Population (%)')
         ax.grid(axis='y', linestyle='--', linewidth=0.7)
+        ax.set_ylim(0, 100)  # Set y-axis limit to 100% for percentage
+        
         plt.tight_layout()
 
         # Append the figure to the list of plots
