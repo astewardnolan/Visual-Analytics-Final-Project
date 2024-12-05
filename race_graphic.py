@@ -15,8 +15,8 @@ def race_graph(cities)-> plt:
 
 
 
-    df = pd.read_csv("QuickFacts Dec-03-2024.csv")
-    df2 = pd.read_csv("QuickFacts Dec-03-2024 nyc.csv")
+    df = pd.read_csv("QuickFacts Dec-04-2024.csv")
+    df2 = pd.read_csv("QuickFacts Dec-04-2024 nyc.csv")
 
     df = df.dropna(axis=1, how='all')
     df2 = df2.dropna(axis=1, how='all')
@@ -38,12 +38,12 @@ def race_graph(cities)-> plt:
     df_race_all
 
     df_race_all['Boston city, Massachusetts'] = df_race_all['Boston city, Massachusetts'].str.replace('%', '').astype(float)
-    df_race_all['Los Angeles County, California'] = df_race_all['Los Angeles County, California'].str.replace('%', '').astype(float)
+    df_race_all['Los Angeles city, California'] = df_race_all['Los Angeles County, California'].str.replace('%', '').astype(float)
     df_race_all['Seattle city, Washington'] = df_race_all['Seattle city, Washington'].str.replace('%', '').astype(float)
     df_race_all['Chicago city, Illinois'] = df_race_all['Chicago city, Illinois'].str.replace('%', '').astype(float)
-    df_race_all['Miami-Dade County, Florida'] = df_race_all['Miami-Dade County, Florida'].str.replace('%', '').astype(float)
+    df_race_all['Miami city, Florida'] = df_race_all['Miami-Dade County, Florida'].str.replace('%', '').astype(float)
     df_race_all['Houston city, Texas'] = df_race_all['Houston city, Texas'].str.replace('%', '').astype(float)
-    df_race_all['New York County, New York'] = df_race_all['New York County, New York'].str.replace('%', '').astype(float)
+    df_race_all['New York city, New York'] = df_race_all['New York County, New York'].str.replace('%', '').astype(float)
 
     # city dummy variables
     boston = False
@@ -83,9 +83,9 @@ def race_graph(cities)-> plt:
     if boston == True:
         cities.append("Boston city, Massachusetts")
     if miami == True:
-        cities.append("Miami-Dade County, Florida")
+        cities.append("Miami city, Florida")
     if nyc == True:
-        cities.append("New York County, New York")
+        cities.append("New York city, New York")
     if houston == True:
         cities.append("Houston city, Texas")
     if seattle == True:
@@ -93,7 +93,7 @@ def race_graph(cities)-> plt:
     if chicago == True:
         cities.append("Chicago city, Illinois")
     if losangeles == True:
-        cities.append("Los Angeles County, California")
+        cities.append("Los Angeles city, California")
 
     white = []
     black = []
