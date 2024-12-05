@@ -8,121 +8,150 @@ Original file is located at
 """
 
 import pandas as pd
-
-df = pd.read_csv("QuickFacts Dec-03-2024.csv")
-df2 = pd.read_csv("QuickFacts Dec-03-2024 nyc.csv")
-
-df = df.dropna(axis=1, how='all')
-df2 = df2.dropna(axis=1, how='all')
-df2
-
-pd.set_option('display.max_rows', None)
-df
-
-df_race = df[(df['Fact'] == 'White alone, percent') | (df['Fact'] == 'Black or African American alone, percent') | (df['Fact'] == 'American Indian and Alaska Native alone, percent') | (df['Fact'] == 'Asian alone, percent') |  (df['Fact'] == 'Native Hawaiian and Other Pacific Islander alone, percent') | (df['Fact'] == 'Two or More Races, percent') | (df['Fact'] == 'Hispanic or Latino, percent') | (df['Fact'] == 'White alone, not Hispanic or Latino, percent')]
-df2_race = df2[(df['Fact'] == 'White alone, percent') | (df2['Fact'] == 'Black or African American alone, percent') | (df2['Fact'] == 'American Indian and Alaska Native alone, percent') | (df2['Fact'] == 'Asian alone, percent') |  (df2['Fact'] == 'Native Hawaiian and Other Pacific Islander alone, percent') | (df2['Fact'] == 'Two or More Races, percent') | (df2['Fact'] == 'Hispanic or Latino, percent') | (df2['Fact'] == 'White alone, not Hispanic or Latino, percent')]
-
-df2_race
-
-df_race = df_race.drop(columns=['Fact Note'])
-df2_race = df2_race.drop(columns=['Fact Note'])
-df2_race
-
-df_race_all =  pd.merge(df_race, df2_race, on='Fact')
-df_race_all
-
-df_race_all['Boston city, Massachusetts'] = df_race_all['Boston city, Massachusetts'].str.replace('%', '').astype(float)
-df_race_all['Los Angeles County, California'] = df_race_all['Los Angeles County, California'].str.replace('%', '').astype(float)
-df_race_all['Seattle city, Washington'] = df_race_all['Seattle city, Washington'].str.replace('%', '').astype(float)
-df_race_all['Chicago city, Illinois'] = df_race_all['Chicago city, Illinois'].str.replace('%', '').astype(float)
-df_race_all['Miami-Dade County, Florida'] = df_race_all['Miami-Dade County, Florida'].str.replace('%', '').astype(float)
-df_race_all['Houston city, Texas'] = df_race_all['Houston city, Texas'].str.replace('%', '').astype(float)
-df_race_all['New York County, New York'] = df_race_all['New York County, New York'].str.replace('%', '').astype(float)
-
-# city dummy variables
-boston = False
-miami = True
-nyc = False
-houston = True
-seattle = False
-chicago = True
-losangeles = False
-
-# selecting cities
-cities = []
-
-if boston == True:
-    cities.append("Boston city, Massachusetts")
-if miami == True:
-    cities.append("Miami-Dade County, Florida")
-if nyc == True:
-    cities.append("New York County, New York")
-if houston == True:
-    cities.append("Houston city, Texas")
-if seattle == True:
-    cities.append("Seattle city, Washington")
-if chicago == True:
-    cities.append("Chicago city, Illinois")
-if losangeles == True:
-    cities.append("Los Angeles County, California")
-
-white = []
-black = []
-native = []
-asian = []
-islander = []
-multi = []
-hispanic = []
-whitenh = []
-
-for city in cities:
-  white.append(df_race_all.loc[0][city])
-  black.append(df_race_all.loc[1][city])
-  native.append(df_race_all.loc[2][city])
-  asian.append(df_race_all.loc[3][city])
-  islander.append(df_race_all.loc[4][city])
-  multi.append(df_race_all.loc[5][city])
-  hispanic.append(df_race_all.loc[6][city])
-  whitenh.append(df_race_all.loc[7][city])
-
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Set the width of the bars
-bar_width = 0.1
+def race_graph(cities)-> plt:
 
-fig = plt.figure(figsize = (20, 20))
 
-# Set the positions of the bars on the x-axis
-r1 = np.arange(len(cities))
-r2 = [x + bar_width for x in r1]
-r3 = [x + bar_width for x in r2]
-r4 = [x + bar_width for x in r3]
-r5 = [x + bar_width for x in r4]
-r6 = [x + bar_width for x in r5]
-r7 = [x + bar_width for x in r6]
-r8 = [x + bar_width for x in r7]
 
-# Create the bar chart
-plt.bar(r1, white, color='b', width=bar_width, edgecolor='grey', label='White %')
-plt.bar(r2, black, color='g', width=bar_width, edgecolor='grey', label='Black %')
-plt.bar(r3, native, color='r', width=bar_width, edgecolor='grey', label='Native %')
-plt.bar(r4, asian, color='orange', width=bar_width, edgecolor='grey', label='Asian %')
-plt.bar(r5, islander, color='y', width=bar_width, edgecolor='grey', label='Pacific Islander %')
-plt.bar(r6, multi, color='indigo', width=bar_width, edgecolor='grey', label='Multiracial %')
-plt.bar(r7, hispanic, color='violet', width=bar_width, edgecolor='grey', label='Hispanic %')
-plt.bar(r8, whitenh, color='pink', width=bar_width, edgecolor='grey', label='White, non-Hispanic %')
+    df = pd.read_csv("QuickFacts Dec-03-2024.csv")
+    df2 = pd.read_csv("QuickFacts Dec-03-2024 nyc.csv")
 
-# Add xticks on the middle of the group bars
-plt.xlabel('Category', fontweight='bold')
-plt.xticks([r + bar_width for r in range(len(cities))], cities)
+    df = df.dropna(axis=1, how='all')
+    df2 = df2.dropna(axis=1, how='all')
+    df2
 
-# Add labels and title
-plt.ylabel('Percentages of the Population')
-plt.title('Racial Demographic by City')
+    pd.set_option('display.max_rows', None)
+    df
 
-# Add a legend
-plt.legend()
+    df_race = df[(df['Fact'] == 'White alone, percent') | (df['Fact'] == 'Black or African American alone, percent') | (df['Fact'] == 'American Indian and Alaska Native alone, percent') | (df['Fact'] == 'Asian alone, percent') |  (df['Fact'] == 'Native Hawaiian and Other Pacific Islander alone, percent') | (df['Fact'] == 'Two or More Races, percent') | (df['Fact'] == 'Hispanic or Latino, percent') | (df['Fact'] == 'White alone, not Hispanic or Latino, percent')]
+    df2_race = df2[(df['Fact'] == 'White alone, percent') | (df2['Fact'] == 'Black or African American alone, percent') | (df2['Fact'] == 'American Indian and Alaska Native alone, percent') | (df2['Fact'] == 'Asian alone, percent') |  (df2['Fact'] == 'Native Hawaiian and Other Pacific Islander alone, percent') | (df2['Fact'] == 'Two or More Races, percent') | (df2['Fact'] == 'Hispanic or Latino, percent') | (df2['Fact'] == 'White alone, not Hispanic or Latino, percent')]
 
-# Display the chart
-plt.show()
+    df2_race
+
+    df_race = df_race.drop(columns=['Fact Note'])
+    df2_race = df2_race.drop(columns=['Fact Note'])
+    df2_race
+
+    df_race_all =  pd.merge(df_race, df2_race, on='Fact')
+    df_race_all
+
+    df_race_all['Boston city, Massachusetts'] = df_race_all['Boston city, Massachusetts'].str.replace('%', '').astype(float)
+    df_race_all['Los Angeles County, California'] = df_race_all['Los Angeles County, California'].str.replace('%', '').astype(float)
+    df_race_all['Seattle city, Washington'] = df_race_all['Seattle city, Washington'].str.replace('%', '').astype(float)
+    df_race_all['Chicago city, Illinois'] = df_race_all['Chicago city, Illinois'].str.replace('%', '').astype(float)
+    df_race_all['Miami-Dade County, Florida'] = df_race_all['Miami-Dade County, Florida'].str.replace('%', '').astype(float)
+    df_race_all['Houston city, Texas'] = df_race_all['Houston city, Texas'].str.replace('%', '').astype(float)
+    df_race_all['New York County, New York'] = df_race_all['New York County, New York'].str.replace('%', '').astype(float)
+
+    # city dummy variables
+    boston = False
+    miami = False
+    nyc = False
+    houston = False
+    seattle = False
+    chicago = False
+    losangeles = False
+
+    if ("Boston") in cities:
+
+        boston = True
+    if "Miami" in cities:
+
+        miami = True
+    if "New York City" in cities:
+
+
+        nyc = True
+    if "Los Angeles" in cities:
+
+        losangeles = True
+    if "Houston" in cities:
+
+        houston = True
+    if "Seattle" in cities:
+
+        seattle = True
+    if "Chicago" in cities:
+
+        chicago = True
+
+    # selecting cities
+    cities = []
+
+    if boston == True:
+        cities.append("Boston city, Massachusetts")
+    if miami == True:
+        cities.append("Miami-Dade County, Florida")
+    if nyc == True:
+        cities.append("New York County, New York")
+    if houston == True:
+        cities.append("Houston city, Texas")
+    if seattle == True:
+        cities.append("Seattle city, Washington")
+    if chicago == True:
+        cities.append("Chicago city, Illinois")
+    if losangeles == True:
+        cities.append("Los Angeles County, California")
+
+    white = []
+    black = []
+    native = []
+    asian = []
+    islander = []
+    multi = []
+    hispanic = []
+    whitenh = []
+
+    for city in cities:
+        white.append(df_race_all.loc[0][city])
+        black.append(df_race_all.loc[1][city])
+        native.append(df_race_all.loc[2][city])
+        asian.append(df_race_all.loc[3][city])
+        islander.append(df_race_all.loc[4][city])
+        multi.append(df_race_all.loc[5][city])
+        hispanic.append(df_race_all.loc[6][city])
+        whitenh.append(df_race_all.loc[7][city])
+
+
+
+    # Set the width of the bars
+    bar_width = 0.1
+
+    fig = plt.figure(figsize = (20, 20))
+
+    # Set the positions of the bars on the x-axis
+    r1 = np.arange(len(cities))
+    r2 = [x + bar_width for x in r1]
+    r3 = [x + bar_width for x in r2]
+    r4 = [x + bar_width for x in r3]
+    r5 = [x + bar_width for x in r4]
+    r6 = [x + bar_width for x in r5]
+    r7 = [x + bar_width for x in r6]
+    r8 = [x + bar_width for x in r7]
+
+    # Create the bar chart
+    plt.bar(r1, white, color='b', width=bar_width, edgecolor='grey', label='White %')
+    plt.bar(r2, black, color='g', width=bar_width, edgecolor='grey', label='Black %')
+    plt.bar(r3, native, color='r', width=bar_width, edgecolor='grey', label='Native %')
+    plt.bar(r4, asian, color='orange', width=bar_width, edgecolor='grey', label='Asian %')
+    plt.bar(r5, islander, color='y', width=bar_width, edgecolor='grey', label='Pacific Islander %')
+    plt.bar(r6, multi, color='indigo', width=bar_width, edgecolor='grey', label='Multiracial %')
+    plt.bar(r7, hispanic, color='violet', width=bar_width, edgecolor='grey', label='Hispanic %')
+    plt.bar(r8, whitenh, color='pink', width=bar_width, edgecolor='grey', label='White, non-Hispanic %')
+
+    # Add xticks on the middle of the group bars
+    plt.xlabel('Category', fontweight='bold')
+    plt.xticks([r + bar_width for r in range(len(cities))], cities)
+
+    # Add labels and title
+    plt.ylabel('Percentages of the Population')
+    plt.title('Racial Demographic by City')
+
+    # Add a legend
+    plt.legend()
+
+    # Display the chart
+    plt.show()
+    return plt

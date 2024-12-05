@@ -14,6 +14,7 @@ from pie import plot_pie_charts
 from milkT import milk_graph
 from CrimeRates import plot_crime_rates
 from age import plot_age_group_distribution
+from race_graphic import race_graph
 
 # Major U.S. cities with coordinates (latitude, longitude)
 cities = {
@@ -181,7 +182,13 @@ if submit_button:
                     st.write("Data for Los Angeles is not available")
                 graph = milk_graph(selected_cities)
                 st.pyplot(graph)
+            if characteristic == "Race":
+                # Reading in the data
+                #cities= selected_cities.replace(" ","")
+                # Generating the plot for the selected cities\
 
+                graph = race_graph(selected_cities)
+                st.pyplot(graph)
             #Crime Rate graphs
             if characteristic == "Crime":
                 # Reading in the data
