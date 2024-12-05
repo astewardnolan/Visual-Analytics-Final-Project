@@ -71,10 +71,11 @@ if select_all:
     crime_rate = True
     walkability = True
 else:
+    cost_of_milk = st.checkbox("Cost of Milk")
     race = st.checkbox("Race")
     age = st.checkbox("Age")
     income = st.checkbox("Income")
-    cost_of_milk = st.checkbox("Cost of Milk")
+
     political_party = st.checkbox("2024 Election Voting")
     housing = st.checkbox("Housing")
     crime_rate = st.checkbox("Crime")
@@ -130,14 +131,14 @@ def generate_graph(selected_characteristics, selected_cities):
 if submit_button:
     # Collect selected characteristics
     selected_characteristics = []
+    if cost_of_milk:
+        selected_characteristics.append("Cost of Milk")
     if race:
         selected_characteristics.append("Race")
     if age:
         selected_characteristics.append("Age")
     if income:
         selected_characteristics.append("Income")
-    if cost_of_milk:
-        selected_characteristics.append("Cost of Milk")
     if political_party:
         selected_characteristics.append("2024 Election Voting")
     if housing:
@@ -162,7 +163,15 @@ if submit_button:
         st.subheader("Graphs for Selected Characteristics")
         for characteristic in selected_characteristics:
             st.write(f"Graph for {characteristic}:")
-            
+
+            if characteristic == "Cost of Milk":
+                # Reading in the data
+                #cities= selected_cities.replace(" ","")
+                # Generating the plot for the selected cities\
+                if "Los Angeles" in selected_cities:
+                    st.write("Data for Los Angeles is not available")
+                graph = milk_graph(selected_cities)
+                st.pyplot(graph)
 
             #Income graphs
             if characteristic == "Income":
@@ -182,14 +191,8 @@ if submit_button:
                 graph = plot_pie_charts(df, selected_cities)
                 st.pyplot(graph)
             #Voting graphs
-            if characteristic == "Cost of Milk":
-                # Reading in the data
-                #cities= selected_cities.replace(" ","")
-                # Generating the plot for the selected cities\
-                if "Los Angeles" in selected_cities:
-                    st.write("Data for Los Angeles is not available")
-                graph = milk_graph(selected_cities)
-                st.pyplot(graph)
+
+
             if characteristic == "Race":
                 # Reading in the data
                 #cities= selected_cities.replace(" ","")
