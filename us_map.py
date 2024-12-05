@@ -68,7 +68,7 @@ else:
     cost_of_milk = st.checkbox("Cost of Milk")
     political_party = st.checkbox("2024 Election Voting")
     housing = st.checkbox("Housing")
-    crime_rate = st.checkbox("Crime Rate")
+    crime_rate = st.checkbox("Crime")
     walkability = st.checkbox("Walkability")
 
 # Below the characteristics, allow users to select cities
@@ -134,7 +134,7 @@ if submit_button:
     if housing:
         selected_characteristics.append("Housing")
     if crime_rate:
-        selected_characteristics.append("Crime Rate")
+        selected_characteristics.append("Crime")
     if walkability:
         selected_characteristics.append("Walkability")
 
@@ -183,7 +183,7 @@ if submit_button:
                 st.pyplot(graph)
 
             #Crime Rate graphs
-            if characteristic == "Crime Rate":
+            if characteristic == "Crime":
                 # Reading in the data
                 df = pd.read_csv('mergedCrimeRates.csv')
                 #cities= selected_cities.replace(" ","")
