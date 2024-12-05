@@ -36,7 +36,7 @@ def plot_pie_charts(df, cities):
         vote_distribution = city_data.groupby('Party')['Votes'].sum()
         
         # Plot pie chart in the current subplot
-        axes[i].pie(vote_distribution, labels=vote_distribution.index, autopct='%1.1f%%', startangle=90, colors=['red', 'green', 'blue'])
+        axes[i].pie(vote_distribution, labels=vote_distribution.index, autopct='%1.1f%%', startangle=90, colors=['blue', 'green', 'red'])
         axes[i].set_title(f'Vote Distribution in {city}')
         axes[i].axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     

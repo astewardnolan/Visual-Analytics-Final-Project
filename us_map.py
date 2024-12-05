@@ -194,7 +194,6 @@ if submit_button:
                 # Reading in the data
                 #cities= selected_cities.replace(" ","")
                 # Generating the plot for the selected cities\
-
                 graph = race_graph(selected_cities)
                 st.pyplot(graph)
             #Crime Rate graphs
