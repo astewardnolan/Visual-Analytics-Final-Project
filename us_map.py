@@ -29,7 +29,15 @@ cities = {
 
 
 # Streamlit title
-st.title("Interactive Map of Major U.S. Cities")
+st.title("CityFinder")
+
+# Add a "Help" Button or Section
+with st.expander("Help", expanded=False):
+    st.write("""
+    Find the best city for you! This website provides an interactive map of major U.S. cities, where you can explore various characteristics like race, income, crime rates, housing, walkability, and more. 
+    You can select multiple cities and characteristics, and the corresponding graphs will be generated for you to analyze.
+    Use the checkboxes to choose characteristics and cities, then press the 'Submit' button to view the results.
+    """)
 
 # Create a base map centered on the United States
 map_center = [37.0902, -95.7129]  # Centered around the United States
