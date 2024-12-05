@@ -38,12 +38,12 @@ def race_graph(cities)-> plt:
     df_race_all
 
     df_race_all['Boston city, Massachusetts'] = df_race_all['Boston city, Massachusetts'].str.replace('%', '').astype(float)
-    df_race_all['Los Angeles city, California'] = df_race_all['Los Angeles County, California'].str.replace('%', '').astype(float)
+    df_race_all['Los Angeles city, California'] = df_race_all['Los Angeles city, California'].str.replace('%', '').astype(float)
     df_race_all['Seattle city, Washington'] = df_race_all['Seattle city, Washington'].str.replace('%', '').astype(float)
     df_race_all['Chicago city, Illinois'] = df_race_all['Chicago city, Illinois'].str.replace('%', '').astype(float)
-    df_race_all['Miami city, Florida'] = df_race_all['Miami-Dade County, Florida'].str.replace('%', '').astype(float)
+    df_race_all['Miami city, Florida'] = df_race_all['Miami city, Florida'].str.replace('%', '').astype(float)
     df_race_all['Houston city, Texas'] = df_race_all['Houston city, Texas'].str.replace('%', '').astype(float)
-    df_race_all['New York city, New York'] = df_race_all['New York County, New York'].str.replace('%', '').astype(float)
+    df_race_all['New York city, New York'] = df_race_all['New York city, New York'].str.replace('%', '').astype(float)
 
     # city dummy variables
     boston = False
