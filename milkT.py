@@ -94,10 +94,11 @@ def milk_graph(cities:list[str]):
 
     # Add labels and title
     plt.xlabel('Cities')
+    plt.xticks(rotation=45)
     plt.ylabel('Prices')
     plt.title('Average Price of Milk by City')
     if losangeles == True:
-        print("Data for Los Angeles is not available")
+        print("Data for Los Angeles is not available.")
     # Display the chart
     plt.show()
     return plt
