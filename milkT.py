@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 
 
+df_milk = pd.read_csv("milkprices.csv")
+
 def milk_graph(cities:list[str]):
     data = [
         ['Boston, MA', 4.46],

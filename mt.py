@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit as sp
 import folium
 from streamlit_folium import st_folium
+import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.subplots as sp
@@ -13,6 +14,11 @@ import seaborn as sns
 from io import BytesIO
 import base64
 from PIL import Image
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+from io import BytesIO
+import base64
 from MergedIncome import plot_selected_cities  # importing MergedIncome.py
 from pie import plot_pie_charts
 from milkT import milk_graph
